@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">CrossoverConvos</string>
+
+    <string name="not_already_part_of_the_convo_click_here_to_register">Not already part of the convo? Click here to register!</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string-array name="nba_teams">
+        <item> ATLANTA HAWKS </item>
+        <item>BOSTON CELTICS</item>
+        <item>BROOKLYN NETS</item>
+        <item>CHARLOTTE HORNETS</item>
+        <item>CHICAGO BULLS</item>
+        <item>CLEVELAND CAVALIERS</item>
+        <item>DALLAS MAVERICKS</item>
+        <item> DENVER NUGGETS</item>
+        <item>DETROIT PISTONS</item>
+        <item>GOLDEN STATE WARRIORS</item>
+        <item>HOUSTON ROCKETS</item>
+        <item>INDIANA PACERS</item>
+        <item>LOS ANGELES CLIPPERS</item>
+        <item>LOS ANGELES LAKERS</item>
+        <item>MEMPHIS GRIZZLIES</item>
+        <item>MIAMI HEAT</item>
+        <item>MILWAUKEE BUCKS</item>
+        <item>MINNESOTA TIMBERWOLVES</item>
+        <item>NEW ORLEANS PELICANS</item>
+        <item>NEW YORK KNICKS</item>
+        <item>OKLAHOMA CITY THUNDER</item>
+        <item>ORLANDO MAGIC</item>
+        <item>PHILADELPHIA 76ERS</item>
+        <item>PHOENIX SUNS</item>
+        <item>PORTLAND TRAIL BLAZERS</item>
+        <item>SACRAMENTO KINGS</item>
+        <item>SAN ANTONIO SPURS</item>
+        <item>TORONTO RAPTORS</item>
+        <item>UTAH JAZZ</item>
+        <item>WASHINGTON WIZARDS</item>
+    </string-array>
+    <string-array name="security_questions">
+    <item>What city were you born in?</item>
+    <item> What is your oldest sibling’s middle name?</item>
+    <item> What is your maternal grandmother\'s maiden name?</item>
+    <item>What was the first concert you attended?</item>
+    <item> What was the make and model of your first car?</item>
+    <item>In what city or town did your parents meet?</item>
+    </string-array>
+    <string name="not_a_member_register_here">Not a member? Register here</string>
+    <string name="login">Login</string>
+    <string name="title_activity_user_feed">UserFeedActivity</string>
+    <string name="welcome">Welcome!</string>
+    <string name="register">Register</string>
+    <string name="security_question">Security Question</string>
+    <string name="date_of_birth_e_g_mm_dd_yyyy">Date of Birth (e.g., MM/dd/yyyy)</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="main_feed_title">Latest Posts</string>
+    <string name="team_discussions_title">Team Discussions</string>
+    <string name="create_post_title">Create a New Post</string>
+    <string name="rivalry_challenges_title">Rivalry Challenges</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
+    <string name="security_question_label">Security Question</string>
+    <string name="security_answer_hint">Security Question Answer</string>
+
+
+</resources>

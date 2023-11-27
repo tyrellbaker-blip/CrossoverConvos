@@ -1,0 +1,102 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- First Name -->
+    <EditText
+        android:id="@+id/editTextFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/first_name"
+        android:inputType="textPersonName"
+        android:autofillHints="nameGiven" />
+
+    <!-- Last Name -->
+    <EditText
+        android:id="@+id/editTextLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:autofillHints="nameFamily" />
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress" />
+
+    <!-- Password -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:autofillHints="password" />
+
+    <!-- Confirm Password -->
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/confirm_password"
+        android:autofillHints="newPassword" />
+
+    <!-- Password Visibility Toggle Button -->
+    <Button
+        android:id="@+id/toggle_password_visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_password"/>
+
+    <!-- Date of Birth -->
+    <EditText
+        android:id="@+id/editTextDateOfBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/date_of_birth_e_g_mm_dd_yyyy"
+        android:inputType="date"
+        android:autofillHints="dateOfBirth" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/security_question_label"
+        android:padding="8dp" />
+
+    <!-- Security Question Dropdown -->
+    <Spinner
+        android:id="@+id/security_question_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Security Question Answer -->
+    <EditText
+        android:id="@+id/editTextSecurityAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/security_answer_hint"
+        android:inputType="text"
+        android:autofillHints="Security Answer" />
+
+    <!-- NBA Teams Spinner -->
+    <Spinner
+        android:id="@+id/nbaTeamsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register" />
+
+</LinearLayout>

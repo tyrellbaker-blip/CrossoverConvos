@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463946927987",
+    "project_id": "crossover-convos",
+    "storage_bucket": "crossover-convos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463946927987:android:81cad5d4304991b65fbf06",
+        "android_client_info": {
+          "package_name": "com.example.crossoverconvos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7hbCabpdPjDCM5k9KC1Ojv4HrmmEi_tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
