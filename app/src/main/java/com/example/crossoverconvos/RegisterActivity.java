@@ -1,24 +1,37 @@
 package com.example.crossoverconvos;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword, editTextDateOfBirth;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword, editTextDateOfBirth, editTextPhoneNumber, editTextSecurityAnswer;
     private Spinner nbaTeamsSpinner, securityQuestionSpinner;
+    private CheckBox checkBoxEmailConsent;
     private Button buttonRegister, togglePasswordVisibilityButton;
+    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private boolean isPasswordVisible = false;
 
@@ -28,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         initUI();
         populateNBATeamsSpinner();
         populateSecurityQuestions();
@@ -40,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         togglePasswordVisibilityButton.setOnClickListener(v -> togglePasswordVisibility());
     }
+
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -47,26 +62,49 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Registration successful
-                        sendVerificationEmail();
+                        saveUserData();
                     } else {
-                        // Registration failed
                         Toast.makeText(RegisterActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    private void saveUserData() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            String firstName = editTextFirstName.getText().toString().trim();
+            String lastName = editTextLastName.getText().toString().trim();
+            String dateOfBirth = editTextDateOfBirth.getText().toString().trim();
+            String favoriteTeam = nbaTeamsSpinner.getSelectedItem().toString();
+            String securityQuestion = securityQuestionSpinner.getSelectedItem().toString();
+            String securityAnswer = editTextSecurityAnswer.getText().toString().trim();
+
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("firstName", firstName);
+            userData.put("lastName", lastName);
+            userData.put("dateOfBirth", dateOfBirth);
+            userData.put("favoriteTeam", favoriteTeam);
+            userData.put("securityQuestion", securityQuestion);
+            userData.put("securityAnswer", securityAnswer);
+
+            db.collection("users").document(userId).set(userData)
+                    .addOnSuccessListener(aVoid -> {
+                        sendVerificationEmail();
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show());
+        }
+    }
+
     private void sendVerificationEmail() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             user.sendEmailVerification()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            // Email sent
                             Toast.makeText(RegisterActivity.this, "Verification email sent. Please check your email.", Toast.LENGTH_LONG).show();
-                            // Redirect to login or other activity as needed
                         } else {
-                            // Failed to send email
-                            Toast.makeText(RegisterActivity.this, "Failed to send verification email: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -79,8 +117,10 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         editTextDateOfBirth = findViewById(R.id.editTextDateOfBirth);
+        editTextSecurityAnswer = findViewById(R.id.editTextSecurityAnswer);
         securityQuestionSpinner = findViewById(R.id.security_question_spinner);
         nbaTeamsSpinner = findViewById(R.id.nbaTeamsSpinner);
+        checkBoxEmailConsent = findViewById(R.id.checkBoxEmailConsent);
         buttonRegister = findViewById(R.id.buttonRegister);
         togglePasswordVisibilityButton = findViewById(R.id.toggle_password_visibility);
     }
@@ -116,26 +156,22 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateInput() {
         boolean isValid = true;
 
-        // Validate First Name
         if (TextUtils.isEmpty(editTextFirstName.getText().toString().trim())) {
             editTextFirstName.setError("First name is required");
             isValid = false;
         }
 
-        // Validate Last Name
         if (TextUtils.isEmpty(editTextLastName.getText().toString().trim())) {
             editTextLastName.setError("Last name is required");
             isValid = false;
         }
 
-        // Validate Email
         String email = editTextEmail.getText().toString().trim();
         if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Valid email is required");
             isValid = false;
         }
 
-        // Validate Password
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
         if (TextUtils.isEmpty(password) || !isValidPassword(password)) {
@@ -143,19 +179,35 @@ public class RegisterActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        // Validate Confirm Password
         if (!password.equals(confirmPassword)) {
             editTextConfirmPassword.setError("Passwords do not match");
             isValid = false;
         }
 
-        // Add other validation logic as necessary
-
-        return isValid;
+        return isValid && checkBoxEmailConsent.isChecked() && checkBoxTextConsent.isChecked();
     }
 
     private boolean isValidPassword(String password) {
-        // Example complexity check: at least 6 characters with 3 uppercase, 2 digits, and 2 special characters
-        return password.matches("(?=.*[A-Z].*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[@#$%^&+=].*[@#$%^&+=]).{6,}");
+        if (password.length() < 8) {
+            Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            Toast.makeText(this, "Password must contain at least one uppercase letter", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*[a-z].*")) {
+            Toast.makeText(this, "Password must contain at least one lowercase letter", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*\\d.*")) {
+            Toast.makeText(this, "Password must contain at least one digit", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*[@#$%^&+=!].*")) {
+            Toast.makeText(this, "Password must contain at least one special character (@#$%^&+=!)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
