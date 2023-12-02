@@ -184,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        return isValid && checkBoxEmailConsent.isChecked() && checkBoxTextConsent.isChecked();
+        return isValid && checkBoxEmailConsent.isChecked();
     }
 
     private boolean isValidPassword(String password) {

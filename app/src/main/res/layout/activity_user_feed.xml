@@ -3,14 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewWelcome"
+        android:id="@+id/textViewMainConvo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="@string/welcome"/>
+        android:text="@string/main_convo_space"
+        android:textSize="22sp" />
 
+    <EditText
+        android:id="@+id/editTextPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/convo_contribution"
+        android:inputType="textMultiLine"
+        android:maxLength="1800"
+        android:autofillHints="Write Post Here" />
+
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPosts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

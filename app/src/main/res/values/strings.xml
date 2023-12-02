@@ -116,6 +116,13 @@
     <string name="sendback_email">Enter your email</string>
     <string name="sendback_submit">Submit</string>
     <string name="resend_email">Signed up but haven\'t received a confirmation email? Click here to resend!</string>
+    <string name="convo_contribution">Convo Contribution</string>
+    <string name="post">Post</string>
+    <string name="main_convo_space">Main Convo Space</string>
+    <string name="edit_button">Edit this post</string>
+    <string name="edit">Edit</string>
+    <string name="logout">Logout</string>
+    <string name="back">Back</string>
 
 
 </resources>

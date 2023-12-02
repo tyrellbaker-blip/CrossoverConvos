@@ -12,32 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CrossoverConvos"
         tools:targetApi="31">
-        <activity
-            android:name=".EmailSentSuccessfullyActivity"
-            android:exported="false"
-            android:label="@string/title_activity_email_sent_successfully"
-            android:theme="@style/Theme.CrossoverConvos" />
-        <activity
-            android:name=".ResendVerificationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_resend_verification"
-            android:theme="@style/Theme.CrossoverConvos" />
+
+        <!-- Other activities -->
+
         <activity
             android:name=".UserFeedActivity"
             android:exported="false"
             android:label="@string/title_activity_user_feed"
             android:theme="@style/Theme.CrossoverConvos" />
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.CrossoverConvos" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -46,14 +40,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <!-- Define your deep link URL here -->
                 <data
                     android:host="crossoverconvos.app"
                     android:scheme="https"
                     android:pathPrefix="/login" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>
