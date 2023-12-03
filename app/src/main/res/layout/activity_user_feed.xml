@@ -1,35 +1,76 @@
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Conversation TextView -->
     <TextView
         android:id="@+id/textViewMainConvo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/main_convo_space"
-        android:textSize="22sp" />
+        android:gravity="center"
+        android:text="@string/main_feed_title"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- EditText for Posting -->
     <EditText
         android:id="@+id/editTextPost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/convo_contribution"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:background="@drawable/edit_text_outline"
+        android:hint="Start trash talk here..."
         android:inputType="textMultiLine"
-        android:maxLength="1800"
-        android:autofillHints="Write Post Here" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewMainConvo" />
 
+    <!-- Post Button -->
+
+    <!-- RecyclerView for Posts -->
     <Button
         android:id="@+id/buttonPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/post" />
+        android:background="@color/LakerPurple"
+        android:text="@string/post"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextPost" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPosts"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-</LinearLayout>
+        android:outlineAmbientShadowColor="#BA4E4E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonPost" />
+
+    <!-- Logout FloatingActionButton -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="516dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/LakerGold"
+        android:contentDescription="@string/logout"
+        android:src="@drawable/ic_logout"
+        android:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewPosts" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

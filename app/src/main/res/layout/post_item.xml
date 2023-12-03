@@ -10,15 +10,16 @@
         android:layout_height="wrap_content"
         android:background="@drawable/text_view_border"
         android:padding="8dp"
+        android:textColor="#000000"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/buttonEditPost"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:text="@string/edit"
-        android:textColor="@android:color/white"
-        android:textSize="10pt"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
         android:background="@drawable/button_background"
         android:padding="8dp"
         android:visibility="gone" />

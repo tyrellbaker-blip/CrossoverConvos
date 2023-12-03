@@ -123,6 +123,10 @@
     <string name="edit">Edit</string>
     <string name="logout">Logout</string>
     <string name="back">Back</string>
+    <string name="new_reg_msg">If you ain\'t in, you can\'t win! Click here to sign up!</string>
+    <string name="new_login_msg">Let\'s Converse!</string>
+    <string name="welcome_to_crossover_convos">Welcome to Crossover Convos!</string>
+    <string name="start_trashtalk_here">start trashtalk here...</string>
 
 
 </resources>
