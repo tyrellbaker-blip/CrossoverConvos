@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -15,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
-    private Button buttonLogin;
+    private Button buttonLogin, buttonAdminLogin;
     private FirebaseAuth auth;
 
     @Override
@@ -27,11 +31,62 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonAdminLogin = findViewById(R.id.buttonAdminLogin);
 
         buttonLogin.setOnClickListener(v -> loginUser());
+        buttonAdminLogin.setOnClickListener(v -> showAdminLoginDialog());
 
-        // Check authentication state when the activity is created
+        TextView textViewRegister = findViewById(R.id.textViewRegister);
+        textViewRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
         checkAuthenticationState();
+    }
+
+
+    private void showAdminLoginDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.admin_dialog, null);
+        builder.setView(dialogView);
+
+        final EditText editTextAdminEmail = dialogView.findViewById(R.id.editTextAdminEmail);
+        final EditText editTextAdminPassword = dialogView.findViewById(R.id.editTextAdminPassword);
+
+        builder.setPositiveButton("Login", (dialog, which) -> {
+            String email = editTextAdminEmail.getText().toString().trim();
+            String password = editTextAdminPassword.getText().toString().trim();
+            authenticateAdmin(email, password);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void authenticateAdmin(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null &&
+                                FirebaseAuth.getInstance().getCurrentUser().getUid().equals("4FRGkuFpHhVVaKSXitxm407myR92")) {
+                            Intent intent = new Intent(MainActivity.this, AdminLandingPageActivity.class);
+                            startActivity(intent);
+                        } else {
+
+                            FirebaseAuth.getInstance().signOut();
+                            Toast.makeText(MainActivity.this, "Unauthorized access.", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+
+                        Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void loginUser() {

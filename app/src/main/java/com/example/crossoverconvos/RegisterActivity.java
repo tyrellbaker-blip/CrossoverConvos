@@ -2,7 +2,6 @@ package com.example.crossoverconvos;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,29 +9,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends UserManagement {
 
-    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword, editTextDateOfBirth, editTextPhoneNumber, editTextSecurityAnswer;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword, editTextDateOfBirth, editTextSecurityAnswer;
     private Spinner nbaTeamsSpinner, securityQuestionSpinner;
     private CheckBox checkBoxEmailConsent;
     private Button buttonRegister, togglePasswordVisibilityButton;
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
     private boolean isPasswordVisible = false;
 
     @Override
@@ -40,8 +25,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
         initUI();
         populateNBATeamsSpinner();
         populateSecurityQuestions();
@@ -59,55 +42,26 @@ public class RegisterActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        saveUserData();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("firstName", editTextFirstName.getText().toString().trim());
+        userData.put("lastName", editTextLastName.getText().toString().trim());
+        userData.put("dateOfBirth", editTextDateOfBirth.getText().toString().trim());
+        userData.put("favoriteTeam", nbaTeamsSpinner.getSelectedItem().toString());
+        userData.put("securityQuestion", securityQuestionSpinner.getSelectedItem().toString());
+        userData.put("securityAnswer", editTextSecurityAnswer.getText().toString().trim());
+
+        createUser(email, password, userData);
     }
 
-    private void saveUserData() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            String firstName = editTextFirstName.getText().toString().trim();
-            String lastName = editTextLastName.getText().toString().trim();
-            String dateOfBirth = editTextDateOfBirth.getText().toString().trim();
-            String favoriteTeam = nbaTeamsSpinner.getSelectedItem().toString();
-            String securityQuestion = securityQuestionSpinner.getSelectedItem().toString();
-            String securityAnswer = editTextSecurityAnswer.getText().toString().trim();
-
-            Map<String, Object> userData = new HashMap<>();
-            userData.put("firstName", firstName);
-            userData.put("lastName", lastName);
-            userData.put("dateOfBirth", dateOfBirth);
-            userData.put("favoriteTeam", favoriteTeam);
-            userData.put("securityQuestion", securityQuestion);
-            userData.put("securityAnswer", securityAnswer);
-
-            db.collection("users").document(userId).set(userData)
-                    .addOnSuccessListener(aVoid -> {
-                        sendVerificationEmail();
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show());
-        }
+    @Override
+    protected void onUserCreationSuccess() {
+        Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show();
+        finish();
     }
 
-    private void sendVerificationEmail() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            user.sendEmailVerification()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Verification email sent. Please check your email.", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+    @Override
+    protected void onUserCreationFailure(String errorMessage) {
+        Toast.makeText(this, "Registration failed: " + errorMessage, Toast.LENGTH_LONG).show();
     }
 
     private void initUI() {

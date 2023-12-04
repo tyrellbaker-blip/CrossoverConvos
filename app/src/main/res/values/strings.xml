@@ -127,6 +127,14 @@
     <string name="new_login_msg">Let\'s Converse!</string>
     <string name="welcome_to_crossover_convos">Welcome to Crossover Convos!</string>
     <string name="start_trashtalk_here">start trashtalk here...</string>
+    <string name="admin_login">Admin Login</string>
+    <string name="admin_username">Username</string>
+    <string name="admin_password">Password</string>
+    <string name="title_activity_admin_landing_page">AdminLandingPageActivity</string>
+    <string name="administrator_functions">Administrator Functions</string>
+    <string name="add_user">Add User</string>
+    <string name="delete_user">Delete User</string>
+    <string name="start_trash_talk_here">Start trash talk here...</string>
 
 
 </resources>

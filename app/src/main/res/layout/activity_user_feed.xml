@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Main Conversation TextView -->
+
     <TextView
         android:id="@+id/textViewMainConvo"
         android:layout_width="0dp"
@@ -19,13 +19,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- EditText for Posting -->
+
     <EditText
         android:id="@+id/editTextPost"
         android:layout_width="0dp"
         android:layout_height="61dp"
         android:background="@drawable/edit_text_outline"
-        android:hint="Start trash talk here..."
+        android:hint="@string/start_trash_talk_here"
         android:inputType="textMultiLine"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -33,9 +33,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMainConvo" />
 
-    <!-- Post Button -->
 
-    <!-- RecyclerView for Posts -->
+
+
     <Button
         android:id="@+id/buttonPost"
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonPost" />
 
-    <!-- Logout FloatingActionButton -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabLogout"
         android:layout_width="wrap_content"

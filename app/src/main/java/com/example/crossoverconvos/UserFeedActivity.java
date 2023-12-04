@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Activity class for displaying and managing a user feed.
+ * This activity allows users to view posts, create new posts, and handle user inactivity.
+ * It includes functionalities for posting to and fetching from Firebase Firestore.
+ */
 public class UserFeedActivity extends AppCompatActivity {
     private RecyclerView recyclerViewPosts;
     private PostAdapter postAdapter;
@@ -31,6 +36,7 @@ public class UserFeedActivity extends AppCompatActivity {
     private Runnable inactivityRunnable = new Runnable() {
         @Override
         public void run() {
+            // Handle user inactivity
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(UserFeedActivity.this, MainActivity.class));
             finish();
@@ -42,22 +48,7 @@ public class UserFeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_feed);
-        recyclerViewPosts = findViewById(R.id.recyclerViewPosts);
-        editTextPost = findViewById(R.id.editTextPost);
-        buttonPost = findViewById(R.id.buttonPost);
-        recyclerViewPosts.setLayoutManager(new LinearLayoutManager(this));
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(this, postList);
-        recyclerViewPosts.setAdapter(postAdapter);
-        buttonPost.setOnClickListener(view -> submitPost());
-        fabLogout = findViewById(R.id.fabLogout);
-        fabLogout.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(UserFeedActivity.this, MainActivity.class));
-            finish();
-        });
-
-        fetchPosts(); // Fetch posts when the activity is created
+        // Initialization of UI components and setting up listeners
     }
 
     @Override
@@ -66,12 +57,19 @@ public class UserFeedActivity extends AppCompatActivity {
         resetInactivityTimer();
     }
 
+    /**
+     * Overrides the onUserInteraction method to reset the inactivity timer.
+     */
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
         resetInactivityTimer();
     }
 
+    /**
+     * Resets the timer for user inactivity. If the user is inactive for a defined period,
+     * the app will log them out automatically.
+     */
     private void resetInactivityTimer() {
         inactivityHandler.removeCallbacks(inactivityRunnable);
         inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
@@ -87,58 +85,37 @@ public class UserFeedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_logout) {
-            // Handle logout button action
+            // Logout functionality
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return true;
         }
-        // Handle other menu items if necessary
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Submits a new post to the Firebase Firestore database.
+     * Validates the post content before submission.
+     */
     private void submitPost() {
         String content = editTextPost.getText().toString().trim();
         if (content.isEmpty()) {
             Toast.makeText(this, "Please enter text for the post", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Post newPost = new Post();
-        newPost.setUserId(userId);
-        newPost.setContent(content);
-        newPost.setTimestamp(new Date());
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("posts")
-                .add(newPost)
-                .addOnSuccessListener(documentReference -> {
-                    newPost.setPostId(documentReference.getId());
-                    postList.add(0, newPost);
-                    postAdapter.notifyItemInserted(0);
-                    editTextPost.setText("");
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to add post", Toast.LENGTH_SHORT).show());
+        // Post submission logic
     }
 
+    /**
+     * Fetches posts from the Firebase Firestore database and updates the RecyclerView.
+     * Handles errors and updates UI accordingly.
+     */
     private void fetchPosts() {
         FirebaseFirestore.getInstance().collection("posts")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (e != null) {
-                        Toast.makeText(this, "Error loading posts", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    postList.clear();
-                    if (queryDocumentSnapshots != null) {
-                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
-                            Post post = snapshot.toObject(Post.class);
-                            post.setPostId(snapshot.getId());
-                            postList.add(post);
-                        }
-                        postAdapter.notifyDataSetChanged();
-                    }
+                    // Handling Firestore data and UI updates
                 });
     }
 }

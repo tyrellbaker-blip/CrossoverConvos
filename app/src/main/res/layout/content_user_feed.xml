@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Main Conversation TextView -->
+
     <TextView
         android:id="@+id/textViewMainConvo"
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
-    <!-- Post Button -->
+
     <Button
         android:id="@+id/buttonPost"
         android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
         android:layout_gravity="top"
         android:scrollbars="vertical" />
 
-    <!-- Logout FloatingActionButton -->
+>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabLogout"
         android:layout_width="wrap_content"

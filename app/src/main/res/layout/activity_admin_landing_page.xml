@@ -1,0 +1,80 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BDBDBD"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewAdminFunctions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/administrator_functions"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewAddUser"
+        android:layout_width="39dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/ic_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdminFunctions" />
+
+    <TextView
+        android:id="@+id/textViewAddUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_user"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/imageViewAddUser"
+        app:layout_constraintStart_toStartOf="@id/imageViewAddUser"
+        app:layout_constraintTop_toBottomOf="@id/imageViewAddUser" />
+
+    <ImageView
+        android:id="@+id/imageViewDeleteUser"
+        android:layout_width="22dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toEndOf="@id/imageViewAddUser"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdminFunctions" />
+
+    <TextView
+        android:id="@+id/textViewDeleteUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_user"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/imageViewDeleteUser"
+        app:layout_constraintStart_toStartOf="@id/imageViewDeleteUser"
+        app:layout_constraintTop_toBottomOf="@id/imageViewDeleteUser" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdminLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/LakerGold"
+        android:contentDescription="@string/logout"
+        android:src="@drawable/ic_logout"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
