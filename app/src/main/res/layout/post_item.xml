@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Existing Views for Post Content and Edit Button -->
     <TextView
         android:id="@+id/textViewContent"
         android:layout_width="match_parent"
@@ -24,15 +23,11 @@
         android:background="@drawable/button_background"
         android:padding="8dp"
         android:visibility="gone" />
-
-    <!-- Button to Show/Hide Comments Section -->
     <Button
         android:id="@+id/buttonShowComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/comments" />
-
-    <!-- Comment Input Section -->
     <LinearLayout
         android:id="@+id/layoutCommentInput"
         android:layout_width="match_parent"
@@ -53,8 +48,6 @@
             android:layout_height="wrap_content"
             android:text="@string/post_comment" />
     </LinearLayout>
-
-    <!-- RecyclerView for Comments -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComments"
         android:layout_width="match_parent"

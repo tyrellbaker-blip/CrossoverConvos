@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Main Convo Space"
+        android:text="@string/main_convo_space"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_outline"
-        android:hint="Start trash talk here..."
+        android:hint="@string/start_trash_talk_here"
         android:inputType="textMultiLine"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
@@ -30,7 +30,7 @@
         android:id="@+id/buttonPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post"
+        android:text="@string/post"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:background="@color/LakerPurple" />

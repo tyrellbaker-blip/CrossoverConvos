@@ -44,7 +44,6 @@ public class UserFeedActivity extends AppCompatActivity {
         }
     };
     private static final long INACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 minutes
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,33 +65,27 @@ public class UserFeedActivity extends AppCompatActivity {
             startActivity(new Intent(UserFeedActivity.this, MainActivity.class));
             finish();
         });
-
-        fetchPosts(); // Fetch posts when the activity is created
+        fetchPosts();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
-
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
         resetInactivityTimer();
     }
-
     private void resetInactivityTimer() {
         inactivityHandler.removeCallbacks(inactivityRunnable);
         inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -104,16 +97,13 @@ public class UserFeedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void submitPost() {
         String content = editTextPost.getText().toString().trim();
         if (content.isEmpty()) {
             Toast.makeText(this, "Please enter text for the post", Toast.LENGTH_SHORT).show();
             return;
         }
-
         buttonPost.setEnabled(false);
-
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         Post newPost = new Post();
         newPost.setUserId(userId);
@@ -163,7 +153,6 @@ public class UserFeedActivity extends AppCompatActivity {
                     }
                 });
     }
-
     private boolean postListContains(Post newPost) {
         for (Post post : postList) {
             if (post.getPostId().equals(newPost.getPostId())) {

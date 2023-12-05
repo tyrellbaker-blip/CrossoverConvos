@@ -10,10 +10,10 @@ public class Comment {
     private Date timestamp;
 
     public Comment() {
-        // Default constructor
+
     }
 
-    // Getters and Setters
+
     public String getCommentId() {
         return commentId;
     }

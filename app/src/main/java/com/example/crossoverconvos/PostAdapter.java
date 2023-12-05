@@ -33,14 +33,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.context = context;
         this.postList = postList;
     }
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
         return new PostViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
@@ -51,9 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             holder.buttonEditPost.setVisibility(View.GONE);
         }
-
         holder.buttonEditPost.setOnClickListener(v -> openEditDialog(post, position));
-
         holder.buttonShowComments.setOnClickListener(v -> {
             boolean isVisible = holder.layoutCommentInput.getVisibility() == View.VISIBLE;
             holder.layoutCommentInput.setVisibility(isVisible ? View.GONE : View.VISIBLE);
@@ -74,7 +70,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
     }
-
     private void openEditDialog(Post post, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final EditText editText = new EditText(context);
@@ -88,7 +83,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
     private void updatePostInFirestore(String postId, String updatedContent, int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("posts").document(postId)
@@ -100,7 +94,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 })
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to update post", Toast.LENGTH_SHORT).show());
     }
-
     private void fetchCommentsForPost(String postId, CommentAdapter commentAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("comments")
@@ -117,7 +110,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 })
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to load comments", Toast.LENGTH_SHORT).show());
     }
-
     private void postComment(String postId, String userId, String content) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> commentData = new HashMap<>();
@@ -125,18 +117,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         commentData.put("userID", userId);
         commentData.put("content", content);
         commentData.put("timestamp", new Timestamp(new Date()));
-
         db.collection("comments")
                 .add(commentData)
                 .addOnSuccessListener(documentReference -> Toast.makeText(context, "Comment posted", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to post comment", Toast.LENGTH_SHORT).show());
     }
-
     @Override
     public int getItemCount() {
         return postList.size();
     }
-
     static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView textViewContent;
         Button buttonEditPost, buttonShowComments, buttonPostComment;

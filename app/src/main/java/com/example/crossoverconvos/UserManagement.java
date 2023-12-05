@@ -12,10 +12,8 @@ import java.util.Map;
  * This abstract class provides user management functionality.
  */
 public abstract class UserManagement extends AppCompatActivity {
-    // Initialize Firebase Authentication and Firestore
     protected FirebaseAuth auth = FirebaseAuth.getInstance();
     protected FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
     /**
      * Creates a new user with the provided email, password, and user data.
      *
@@ -39,12 +37,10 @@ public abstract class UserManagement extends AppCompatActivity {
                     }
                 });
     }
-
     /**
      * Called when a user is successfully created.
      */
     protected abstract void onUserCreationSuccess();
-
     /**
      * Called when there is a failure in user creation.
      *

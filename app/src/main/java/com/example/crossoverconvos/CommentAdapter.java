@@ -65,7 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 String formattedName = firstName + " " + lastName.charAt(0) + ".";
                 nameTextView.setText(formattedName);
             } else {
-                nameTextView.setText("Anonymous"); // Default name in case of failure
+                nameTextView.setText("Anonymous");
             }
         });
     }

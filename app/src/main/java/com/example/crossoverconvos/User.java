@@ -40,9 +40,6 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
     }
-
-    // Getters and Setters for each field with appropriate JavaDoc comments.
-
     /**
      * Returns the first name of the user.
      * @return the first name of the user
@@ -50,7 +47,6 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
-
     /**
      * Sets the first name of the user.
      * @param firstName the first name to set
@@ -58,7 +54,6 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     /**
      * Returns the last name of the user.
      * @return the last name of the user
@@ -66,7 +61,6 @@ public class User {
     public String getLastName() {
         return lastName;
     }
-
     /**
      * Sets the last name of the user.
      * @param lastName the last name to set

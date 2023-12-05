@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private Button buttonLogin, buttonAdminLogin;
     private FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         checkAuthenticationState();
     }
-
-
     private void showAdminLoginDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.admin_dialog, null);
@@ -67,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
     private void authenticateAdmin(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -88,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
     private void loginUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -97,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Please enter email and password", Toast.LENGTH_LONG).show();
             return;
         }
-
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -115,13 +109,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
         checkAuthenticationState();
     }
-
     private void checkAuthenticationState() {
         if (auth.getCurrentUser() != null) {
             Log.d("MainActivity", "User logged in: " + auth.getCurrentUser().getUid());

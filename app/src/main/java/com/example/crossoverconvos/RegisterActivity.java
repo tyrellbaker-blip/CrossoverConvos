@@ -37,11 +37,9 @@ public class RegisterActivity extends UserManagement {
 
         togglePasswordVisibilityButton.setOnClickListener(v -> togglePasswordVisibility());
     }
-
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-
         Map<String, Object> userData = new HashMap<>();
         userData.put("firstName", editTextFirstName.getText().toString().trim());
         userData.put("lastName", editTextLastName.getText().toString().trim());
@@ -49,21 +47,17 @@ public class RegisterActivity extends UserManagement {
         userData.put("favoriteTeam", nbaTeamsSpinner.getSelectedItem().toString());
         userData.put("securityQuestion", securityQuestionSpinner.getSelectedItem().toString());
         userData.put("securityAnswer", editTextSecurityAnswer.getText().toString().trim());
-
         createUser(email, password, userData);
     }
-
     @Override
     protected void onUserCreationSuccess() {
         Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show();
         finish();
     }
-
     @Override
     protected void onUserCreationFailure(String errorMessage) {
         Toast.makeText(this, "Registration failed: " + errorMessage, Toast.LENGTH_LONG).show();
     }
-
     private void initUI() {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
@@ -78,21 +72,18 @@ public class RegisterActivity extends UserManagement {
         buttonRegister = findViewById(R.id.buttonRegister);
         togglePasswordVisibilityButton = findViewById(R.id.toggle_password_visibility);
     }
-
     private void populateNBATeamsSpinner() {
         String[] nbaTeams = getResources().getStringArray(R.array.nba_teams);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nbaTeams);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nbaTeamsSpinner.setAdapter(adapter);
     }
-
     private void populateSecurityQuestions() {
         String[] securityQuestions = getResources().getStringArray(R.array.security_questions);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, securityQuestions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         securityQuestionSpinner.setAdapter(adapter);
     }
-
     private void togglePasswordVisibility() {
         if (isPasswordVisible) {
             editTextPassword.setInputType(129); // 129 refers to "textPassword" type
@@ -106,7 +97,6 @@ public class RegisterActivity extends UserManagement {
             isPasswordVisible = true;
         }
     }
-
     private boolean validateInput() {
         boolean isValid = true;
 
@@ -140,7 +130,6 @@ public class RegisterActivity extends UserManagement {
 
         return isValid && checkBoxEmailConsent.isChecked();
     }
-
     private boolean isValidPassword(String password) {
         if (password.length() < 8) {
             Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show();

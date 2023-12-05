@@ -8,11 +8,7 @@ public class Post {
     private String content;
     private Date timestamp;
 
-    public Post() {
-
-    }
-
-
+    public Post() {}
     public String getPostId() {
         return postId;
     }
