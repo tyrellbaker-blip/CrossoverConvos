@@ -1,0 +1,9 @@
+{
+  "name": "CrossoverConvos",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {},
+  "scripts": {
+    "lint": "eslint . --fix"
+  }
+}
